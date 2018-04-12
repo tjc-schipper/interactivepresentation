@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="alert alert-error" *ngIf='currentError != ""'>{{currentError}}</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-8 col-xs-offset-2">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				This is some explanation as to what the user is supposed to do now, and where to find the lobby code that they need to enter.	
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<form>
+			<div class="form-group" [ngClass]="{'has-success': isValidRoomName()}">
+				<label for="roomname">Room name:</label>
+				<input type="text" class="form-control" name="lobbyCode" [(ngModel)]="lobbyCode">
+			</div>
+			<input type="button" class="btn btn-default" value="Connect!" (click)="onClickConnect()" [disabled]="!isValidRoomName()">
+		</form>		
+	</div>
+</div>
+
+
