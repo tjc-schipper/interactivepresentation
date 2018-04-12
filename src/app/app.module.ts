@@ -13,33 +13,38 @@ import { LobbyHeaderComponent } from './lobby/lobbyheader/lobbyheader.component'
 import { WaitscreenComponent } from './lobby/waitscreen/waitscreen.component';
 import { OnlyAlphaCharsDirective } from './utils/only-alpha-chars.directive';
 import { MaxCharsDirective } from './utils/max-chars.directive';
+import { ExampleActivityComponent } from './activities/example-activity/example-activity.component';
 
 
 const appRoutes: Routes = [
-//{ path: 'manage', component: ManageOverviewComponent },
-//{ path: 'manage/:code', component: ManageLoginComponent },
+{ path: '', redirectTo: 'participate', pathMatch: 'full'},
 { path: 'participate', component: ConnectPageComponent },
-{ path: 'participate/:code', component: LobbyPageComponent},
-{ path: '', redirectTo: '/participate', pathMatch: 'full'},
+{ path: 'participate/:code', component: LobbyPageComponent, children: [
+{ path: 'wait', component: WaitscreenComponent },
+{ path: ':actID', component: ExampleActivityComponent },
+{ path: '**', redirectTo: 'wait' }
+]
+},
 { path: '**', redirectTo: '/participate'}
 ];
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ConnectFormComponent,
-    LobbyHeaderComponent,
-    WaitscreenComponent,
-    LobbyPageComponent,
-    ConnectPageComponent,
-    OnlyAlphaCharsDirective,
-    MaxCharsDirective
+  AppComponent,
+  ConnectFormComponent,
+  LobbyHeaderComponent,
+  WaitscreenComponent,
+  LobbyPageComponent,
+  ConnectPageComponent,
+  OnlyAlphaCharsDirective,
+  MaxCharsDirective,
+  ExampleActivityComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    RouterModule.forRoot(appRoutes)
+  BrowserModule,
+  FormsModule,
+  RouterModule.forRoot(appRoutes)
   ],
   providers: [LobbyService],
   bootstrap: [AppComponent]
