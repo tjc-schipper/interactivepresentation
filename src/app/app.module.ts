@@ -11,6 +11,8 @@ import { ConnectFormComponent } from './login/connect-form/connect-form.componen
 import { LobbyPageComponent } from './lobby/lobbypage/lobbypage.component';
 import { LobbyHeaderComponent } from './lobby/lobbyheader/lobbyheader.component';
 import { WaitscreenComponent } from './lobby/waitscreen/waitscreen.component';
+import { OnlyAlphaCharsDirective } from './utils/only-alpha-chars.directive';
+import { MaxCharsDirective } from './utils/max-chars.directive';
 
 
 const appRoutes: Routes = [
@@ -30,7 +32,9 @@ const appRoutes: Routes = [
     LobbyHeaderComponent,
     WaitscreenComponent,
     LobbyPageComponent,
-    ConnectPageComponent
+    ConnectPageComponent,
+    OnlyAlphaCharsDirective,
+    MaxCharsDirective
   ],
   imports: [
     BrowserModule,
