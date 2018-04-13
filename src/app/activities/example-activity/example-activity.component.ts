@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExampleActivityComponent implements OnInit {
 
+  message: string = "";
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+  	console.log("Submitted: " + this.message);
+  	this.message = "";
+  }
+
+  hasMessage() {
+    return this.message.length > 0;
   }
 
 }

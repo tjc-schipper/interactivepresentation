@@ -10,22 +10,22 @@ import { ConnectPageComponent } from './login/connect-page/connect-page.componen
 import { ConnectFormComponent } from './login/connect-form/connect-form.component';
 import { LobbyPageComponent } from './lobby/lobbypage/lobbypage.component';
 import { LobbyHeaderComponent } from './lobby/lobbyheader/lobbyheader.component';
-import { WaitscreenComponent } from './lobby/waitscreen/waitscreen.component';
+import { WaitscreenComponent } from './activities/waitscreen/waitscreen.component';
 import { OnlyAlphaCharsDirective } from './utils/only-alpha-chars.directive';
 import { MaxCharsDirective } from './utils/max-chars.directive';
 import { ExampleActivityComponent } from './activities/example-activity/example-activity.component';
 
 
 const appRoutes: Routes = [
-{ path: '', redirectTo: 'participate', pathMatch: 'full'},
-{ path: 'participate', component: ConnectPageComponent },
-{ path: 'participate/:code', component: LobbyPageComponent, children: [
-{ path: 'wait', component: WaitscreenComponent },
-{ path: ':actID', component: ExampleActivityComponent },
-{ path: '**', redirectTo: 'wait' }
-]
-},
-{ path: '**', redirectTo: '/participate'}
+  { path: '', redirectTo: 'participate', pathMatch: 'full'},
+  { path: 'participate', component: ConnectPageComponent },
+  { path: 'participate/:code', component: LobbyPageComponent, children: [
+    { path: 'wait', component: WaitscreenComponent },
+    { path: ':actID', component: ExampleActivityComponent },
+    { path: '**', redirectTo: 'wait' }
+    ]
+  },
+  { path: '**', redirectTo: '/participate'}
 ];
 
 

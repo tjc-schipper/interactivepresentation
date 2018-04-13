@@ -1,5 +1,9 @@
 <div class="container">
-	<app-lobbyheader [lobbycode]="lobbyCode"></app-lobbyheader>
-	<router-outlet></router-outlet>
+	<div class="row">
+		<app-lobbyheader [lobbycode]="lobbyCode"></app-lobbyheader>		
+	</div>
+	<div class="row">
+		<router-outlet></router-outlet>
+	</div>
 	<button class="btn btn-danger" (click)="debug_mockUpdate()">Debug</button>
 </div>
