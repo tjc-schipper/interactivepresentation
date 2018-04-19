@@ -1,0 +1,9 @@
+{
+	"name": "InteractivePresentationServer",
+	"version": "0.0.1",
+	"description": "Server for interactive presentation prototype",
+	"dependencies": {
+		"express": "^4.11.2",
+		"socket.io": "^1.3.4"
+	}
+}

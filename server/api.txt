@@ -1,0 +1,29 @@
+/////////////////////
+///// TO SERVER /////
+/////////////////////
+connection: {user}
+disconnect: null
+
+admin-lobby-create: {lobbyCode}
+admin-lobby-close: {lobbyCode}
+
+lobby-join: {lobbyCode}
+lobby-leave: {lobbyCode}
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////
+///// TO CLIENT /////
+/////////////////////
+
+lobby-join-failed
+lobby-join-success
