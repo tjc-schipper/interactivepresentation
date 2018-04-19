@@ -16,7 +16,7 @@
 	<div class="col-xs-12">
 		<form>
 			<div class="form-group" [ngClass]="{'has-success': isValidRoomName()}">
-				<label for="roomname">Room name:</label>
+				<label for="roomname">Room code:</label>
 				<input type="text" class="form-control" name="lobbyCode" [(ngModel)]="lobbyCode" appOnlyAlpha [appMaxChars]='4'>
 			</div>
 			<input type="button" class="btn btn-default" value="Connect!" (click)="onClickConnect()" [disabled]="!isValidRoomName()">

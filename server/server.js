@@ -22,20 +22,15 @@ io.on('connection', function(user) {
 	});
 
 	user.on('lobby-leave', function() {
-		var lobby = lobbyManager.getLobbyForUser(user.id);
-		if (lobby != null) {
-			lobbyManager.removeUserFromLobby(user.id, lobby.code)
-		}
+		lobbyManager.removeUserFromLobby(user.id);
 	});
 
 	user.on('disconnect', function() {
-		lobbyManager.removeUserFromLobby(user.id, user.session_id);
+		lobbyManager.removeUserFromLobby(user.id);
+		
+		console.log('LOG: User ' + user.id + ' disconnected.');
 		delete users[user.id];
-		console.log('User connected with id: ' + user.id);
 	});
-
-
-
 
 
 	user.on('admin-lobby-create', function(data) {

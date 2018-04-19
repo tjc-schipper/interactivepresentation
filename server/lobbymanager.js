@@ -9,13 +9,22 @@ var LobbyManager = module.exports = {
 		return true;
 	},
 
-	removeUserFromLobby: function(user_id, lobby_code) {
-		this.lobbies[lobby_code].removeUser(user_id);
+	removeUserFromLobby: function(user_id) {
+		var userLobby = this.getLobbyForUser(user_id);
+		if (userLobby != null) {
+			userLobby.removeUser(user_id);
+		}
 	},
 
 	createLobby: function(lobby_code) {
+		if (this.lobbies[lobby_code] != null) {
+			console.log('WARNING: Code already in use');
+			return;
+		}
+
 		var lobby = new Lobby(lobby_code);
 		this.lobbies[lobby_code] = lobby;
+		console.log('LOG: Created lobby: ' + lobby_code);
 		return lobby;
 	},
 
@@ -24,7 +33,10 @@ var LobbyManager = module.exports = {
 		if (lobby != null) {
 			lobby.close();
 			delete this.lobbies[lobby_code];
+			console.log('LOG: Closed lobby: ' + lobby_code);
 		}
+		else
+			console.log('WARNING: Cannot close lobby ' + lobby_code + ', does not exist');
 	},
 
 	advanceLobbyActivity: function(lobby_code) {

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { LobbyService } from './lobby/lobby.service';
+import { SocketService } from './socket.service';
 
 import { AppComponent } from './app.component';
 import { ConnectPageComponent } from './login/connect-page/connect-page.component';
@@ -14,6 +15,7 @@ import { WaitscreenComponent } from './activities/waitscreen/waitscreen.componen
 import { OnlyAlphaCharsDirective } from './utils/only-alpha-chars.directive';
 import { MaxCharsDirective } from './utils/max-chars.directive';
 import { ExampleActivityComponent } from './activities/example-activity/example-activity.component';
+import { AdminDebugPanelComponent } from './admin/admin-debug-panel/admin-debug-panel.component';
 
 
 const appRoutes: Routes = [
@@ -39,14 +41,15 @@ const appRoutes: Routes = [
   ConnectPageComponent,
   OnlyAlphaCharsDirective,
   MaxCharsDirective,
-  ExampleActivityComponent
+  ExampleActivityComponent,
+  AdminDebugPanelComponent
   ],
   imports: [
   BrowserModule,
   FormsModule,
   RouterModule.forRoot(appRoutes)
   ],
-  providers: [LobbyService],
+  providers: [LobbyService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,13 +22,12 @@ function Lobby(lobby_code) {
 	this.code = lobby_code;
 	this.timeCreate = new Date().getTime() / 1000;
 	this.activityIdx = 0;
-	console.log('New lobby created');
 }
 
 Lobby.prototype.addUser = function(user_id) {
 	this.user_ids.push(user_id);
 	users[user_id].emit('lobby-join-success')
-	console.log('User added to lobby: ' + user_id);
+	console.log('LOG: User ' + user_id + ' added to lobby ' + this.code);
 }
 
 Lobby.prototype.removeUser = function(user_id) {
@@ -40,8 +39,7 @@ Lobby.prototype.removeUser = function(user_id) {
 	}
 	// remove the user_id from the list
 	this.user_ids.splice(i, 1);
-
-	console.log('User removed from lobby: ' + user_id);
+	console.log('LOG: User ' + user_id + ' removed from lobby ' + this.code);
 }
 
 Lobby.prototype.hasUser = function(user_id) {
