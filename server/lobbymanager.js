@@ -5,8 +5,17 @@ var LobbyManager = module.exports = {
 	lobbies: {},
 
 	addUserToLobby: function(user_id, lobby_code) {
-		this.lobbies[lobby_code].addUser(user_id);
-		return true;
+		const lobby = this.lobbies[lobby_code];
+		if (lobby != null) {
+			if (!lobby.hasUser(user_id)) {
+				lobby.addUser(user_id);
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+			return false;
 	},
 
 	removeUserFromLobby: function(user_id) {

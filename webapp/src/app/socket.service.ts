@@ -23,8 +23,12 @@ export class SocketService {
 		this.socket.emit(message, data);
 	}
 
-	public getSocket() {
-		return this.socket;
+	public on(message: string, callback) {
+		this.socket.on(message, callback);
+	}
+
+	public removeOn(message: string, callback) {
+		this.socket.removeListener(message, callback);
 	}
 
 	public hasConnection() {
