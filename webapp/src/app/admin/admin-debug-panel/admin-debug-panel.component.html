@@ -3,11 +3,11 @@
 	<form>
 		<div class="form-group">
 			<label for="adminRoomCode">lobby code:</label>
-			<input type="text" name="adminRoomCode" class="form-control">
+			<input #code type="text" name="adminRoomCode" class="form-control" [(ngModel)]="lobbyCode" appOnlyAlpha [appMaxChars]='4'>
 		</div>
 		<div class="form-group">
-			<button class="btn btn-primary" (click)="create()">Create</button>
-			<button class="btn btn-primary" (click)="close()">Close</button>
+			<button class="btn btn-primary" (click)="create(code.value)" [disabled]="lobbyCode == ''">Create</button>
+			<button class="btn btn-primary" (click)="close(code.value)" [disabled]="lobbyCode == ''">Close</button>
 			<button class="btn btn-primary" (click)="next()">Next activity</button>
 		</div>
 	</form>

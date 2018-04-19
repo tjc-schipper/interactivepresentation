@@ -10,15 +10,19 @@ export class AdminDebugPanelComponent implements OnInit {
 
   constructor(private socket: SocketService) { }
 
+  lobbyCode: string = "";
+
   ngOnInit() {
   }
 
-  create() {
-  	this.socket.send('admin-lobby-create', {lobbyCode: 'abcd'});
+  create(code:string) {
+  	if (code != null && code != "")
+      this.socket.send('admin-lobby-create', {lobbyCode: code});
   }
 
-  close() {
-    this.socket.send('admin-lobby-close', {lobbyCode: 'abcd'});
+  close(code:string) {
+    if (code != null && code != "")
+      this.socket.send('admin-lobby-close', {lobbyCode: code});
   }
 
   next() {
