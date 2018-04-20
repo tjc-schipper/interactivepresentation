@@ -16,18 +16,28 @@ io.on('connection', function(user) {
 
 	// data = {lobbyCode: 'abcd'}
 	user.on('lobby-join', function(data, clientResponse) {
+		var success = lobbyManager.addUserToLobby(user.id, data.lobbyCode);
+		if (success)
+			users[user.id].lobbyCode = data.lobbyCode;
+
 		clientResponse({
 			lobbyCode: data.lobbyCode,
-			success: lobbyManager.addUserToLobby(user.id, data.lobbyCode)
-		});
-
-		user.on('activity-input', function(data) {
-			console.log('LOG: Activity input received: ' + data.content);
+			success: success
 		});
 	});
 
+	user.on('activity-input', function(data) {
+		var lobby = lobbyManager.getLobby(users[user.id].lobbyCode);
+		if (lobby != null) {
+			lobby.receiveInput(user.id, data);
+		}
+		else {
+			console.log("WARNING: Tried to update activity data but no lobby found");
+		}
+	});
+
 	user.on('lobby-leave', function() {
-		console.log('LOG: User ' + user.id + ' disconnected from lobby ' + lobbyManager.getLobbyForUser(user.id));
+		console.log('LOG: User ' + user.id + ' disconnected from lobby ' + users[user.id].lobbyCode);
 		lobbyManager.removeUserFromLobby(user.id);
 	});
 

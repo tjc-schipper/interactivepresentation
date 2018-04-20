@@ -1,4 +1,5 @@
 var Lobby = require('./lobby2.js');
+var users = require('./users.js').userList;
 
 var LobbyManager = module.exports = {
 	MAX_USERS_PER_LOBBY: 2,
@@ -19,9 +20,9 @@ var LobbyManager = module.exports = {
 	},
 
 	removeUserFromLobby: function(user_id) {
-		var userLobby = this.getLobbyForUser(user_id);
-		if (userLobby != null) {
-			userLobby.removeUser(user_id);
+		var lobby = this.getLobby(users[user_id].lobbyCode);
+		if (lobby != null) {
+			lobby.removeUser(user_id);
 		}
 	},
 
@@ -68,6 +69,4 @@ var LobbyManager = module.exports = {
 		}
 		return lobby;
 	}
-
-
 }

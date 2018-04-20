@@ -16,6 +16,7 @@ import { OnlyAlphaCharsDirective } from './utils/only-alpha-chars.directive';
 import { MaxCharsDirective } from './utils/max-chars.directive';
 import { ExampleActivityComponent } from './activities/example-activity/example-activity.component';
 import { AdminDebugPanelComponent } from './admin/admin-debug-panel/admin-debug-panel.component';
+import { ViewExampleComponent } from './viewer/view-example/view-example.component';
 
 
 const appRoutes: Routes = [
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
   OnlyAlphaCharsDirective,
   MaxCharsDirective,
   ExampleActivityComponent,
-  AdminDebugPanelComponent
+  AdminDebugPanelComponent,
+  ViewExampleComponent
   ],
   imports: [
   BrowserModule,

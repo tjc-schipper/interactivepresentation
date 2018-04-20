@@ -1,5 +1,7 @@
 //TODO: Create Activity classes!
 
+var Activity = require('./activity.js');
+
 const ACTIVITIES = [
 // WaitScreen,
 // SimpleVotes,
@@ -22,6 +24,8 @@ function Lobby(lobby_code) {
 	this.code = lobby_code;
 	this.timeCreate = new Date().getTime() / 1000;
 	this.activityIdx = 0;
+
+	this.activity = new Activity();
 }
 
 Lobby.prototype.addUser = function(user_id) {
@@ -55,30 +59,16 @@ Lobby.prototype.emitToAll = function(endpoint, data) {
 		var uid = this.user_ids[i];
 		this.users[uid].emit(endpoint, data);
 	}
+	console.log("OUTPUT: Sent update: " + data + " to " + this.userCount() + " users.");
 }
 
-Lobby.prototype.getEmittableUserList = function() {
-	var userList = [];
-	for (var i = 0; i < this.user_ids.length; i++) {
-		var uid = this.user_ids[i];
-		userList.push({
-			face: '',
-			id: uid,
-			username: this.users[uid].username,
-			x: 0,	//?
-			y: 0,	//?
-			a: 0	//?
-		});
-	}
-	return userList;
-}
-
-// data = {value: 123}
+// data = {content: 123}
 Lobby.prototype.receiveInput = function(user_id, data) {
 	if (this.activity == null)
 		return;
 
 	this.activity.addInput(user_id, data);
+	this.emitToAll('activity-update', {content: this.activity.getAllInput()});
 }
 
 Lobby.prototype.close = function() {

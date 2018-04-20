@@ -7,32 +7,38 @@ function Activity() {
 }
 
 
-// data = {value: 123}
-Activity.prototype.addInput(user_id, data) {
-	this.data[user_id] = new DataEntry(user_id, data.value);
+// data = {content: 123}
+Activity.prototype.addInput = function(user_id, data) {
+	this.data[user_id] = new InputEntry(user_id, data.content);
 }
 
-Activity.prototype.getInputByUser(user_id) {
+Activity.prototype.getAllInput = function() {
+	return this.data.map(function(el) {
+		return el.content;
+	});
+}
+
+Activity.prototype.getInputByUser = function(user_id) {
 	const found = this.data[user_id];
-	return (found != null) ? found.value : null;
+	return (found != null) ? found.content : null;
 }
 
-Activity.prototype.getAggregatedInput() {
-	var result = { num: 0, values: []};
+Activity.prototype.getAggregatedInput = function() {
+	var result = { num: 0, content: []};
 	return this.data.reduce(function(acc, entry) {
 		
-		// Create object in result.values array if doesn't exist
-		if (result.values[entry.value] == null) {
-			result.values[entry.value] = {
-				value: entry.value,
+		// Create object in result.content array if doesn't exist
+		if (result.content[entry.content] == null) {
+			result.content[entry.content] = {
+				content: entry.content,
 				count: 0,
 				users: []
 			};
 		}
 
-		// Add data to result.values array
-		result.values[entry.value].count++;
-		result.values[entry.value].users.push(entry.user_id);
+		// Add data to result.content array
+		result.content[entry.content].count++;
+		result.content[entry.content].users.push(entry.user_id);
 
 		// Increment total count
 		result.num++;	
@@ -40,9 +46,9 @@ Activity.prototype.getAggregatedInput() {
 }
 
 
-// Container class for activity data
-function DataEntry(user_id, value) {
-	this.value = value;
+// Container class for activity input
+function InputEntry(user_id, content) {
+	this.content = content;
 	this.user_id = user_id;
 }
 module.exports = Activity;
