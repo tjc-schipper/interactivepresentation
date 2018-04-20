@@ -26,7 +26,6 @@ function Lobby(lobby_code) {
 
 Lobby.prototype.addUser = function(user_id) {
 	this.user_ids.push(user_id);
-	this.users[user_id].emit('lobby-join-success', {lobbyCode: this.code});
 	console.log('LOG: User ' + user_id + ' added to lobby ' + this.code);
 }
 

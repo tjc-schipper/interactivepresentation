@@ -37,6 +37,10 @@ var LobbyManager = module.exports = {
 		return lobby;
 	},
 
+	getLobby: function(lobby_code) {
+		return this.lobbies[lobby_code];
+	},
+
 	closeLobby: function(lobby_code) {
 		var lobby = this.lobbies[lobby_code];
 		if (lobby != null) {

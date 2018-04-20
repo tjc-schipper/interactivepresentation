@@ -10,6 +10,8 @@ admin-lobby-close: {lobbyCode}
 lobby-join: {lobbyCode}
 lobby-leave: {lobbyCode}
 
+activity-input: {content}
+
 
 
 

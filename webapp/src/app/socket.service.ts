@@ -15,6 +15,10 @@ export class SocketService {
 		this.initSocket();
 	}
 
+	public getSocket() {
+		return this.socket;
+	}
+
 	public initSocket() {
 		this.socket = socketIo(SERVER_URL);
 	}
@@ -23,7 +27,7 @@ export class SocketService {
 		this.socket.emit(message, data);
 	}
 
-	public on(message: string, callback) {
+	public on(message: string, data:any, callback) {
 		this.socket.on(message, callback);
 	}
 

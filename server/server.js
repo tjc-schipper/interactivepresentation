@@ -1,4 +1,8 @@
 #!/bin/env node
+
+//TODO: Implement namespaces/rooms to separate different lobbies, as well as user/admin roles!
+// https://socket.io/docs/rooms-and-namespaces/
+
 var express = require('express');
 var http = require('http').Server();
 var io = require('socket.io')(http);
@@ -11,17 +15,19 @@ io.on('connection', function(user) {
 	console.log('User connected with id: ' + user.id);
 
 	// data = {lobbyCode: 'abcd'}
-	user.on('lobby-join', function(data) {
-		if (!lobbyManager.addUserToLobby(user.id, data.lobbyCode)) {
-			// notify user if not successful!
-			user.emit('lobby-join-failed', {
-				reason: 'Lobby not found!',
-				lobbyCode: data.lobbyCode
-			});
-		}
+	user.on('lobby-join', function(data, clientResponse) {
+		clientResponse({
+			lobbyCode: data.lobbyCode,
+			success: lobbyManager.addUserToLobby(user.id, data.lobbyCode)
+		});
+
+		user.on('activity-input', function(data) {
+			console.log('LOG: Activity input received: ' + data.content);
+		});
 	});
 
 	user.on('lobby-leave', function() {
+		console.log('LOG: User ' + user.id + ' disconnected from lobby ' + lobbyManager.getLobbyForUser(user.id));
 		lobbyManager.removeUserFromLobby(user.id);
 	});
 
@@ -40,6 +46,8 @@ io.on('connection', function(user) {
 	user.on('admin-lobby-close', function(data) {
 		lobbyManager.closeLobby(data.lobbyCode);
 	});
+
+
 });
 
 

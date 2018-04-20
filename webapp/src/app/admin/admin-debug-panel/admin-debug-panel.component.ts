@@ -33,4 +33,8 @@ export class AdminDebugPanelComponent implements OnInit {
   	return ((this.socket != null) && (this.socket.hasConnection()));
   }
 
+  isValidLobbyCode() {
+    return this.lobbyCode.length == 4;
+  }
+
 }

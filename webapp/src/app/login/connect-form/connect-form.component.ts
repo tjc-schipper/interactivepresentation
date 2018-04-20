@@ -17,7 +17,7 @@ export class ConnectFormComponent implements OnInit {
   }
 
   onClickConnect = function() {
-    this.lobbyService.doConnect(this.lobbyCode);
+    this.lobbyService.attemptJoin(this.lobbyCode);
   }
 
   isValidRoomName = function() {
