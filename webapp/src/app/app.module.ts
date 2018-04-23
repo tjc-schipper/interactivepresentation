@@ -17,6 +17,7 @@ import { MaxCharsDirective } from './utils/max-chars.directive';
 import { ExampleActivityComponent } from './activities/example-activity/example-activity.component';
 import { AdminDebugPanelComponent } from './admin/admin-debug-panel/admin-debug-panel.component';
 import { ViewExampleComponent } from './viewer/view-example/view-example.component';
+import { ManagePageComponent } from './admin/manage-page/manage-page.component';
 
 
 const appRoutes: Routes = [
@@ -28,6 +29,8 @@ const appRoutes: Routes = [
     { path: '**', redirectTo: 'wait' }
     ]
   },
+  { path: 'manage', component: ManagePageComponent },
+  //{ path: 'manage/:code', component: ManagePageComponent },
   { path: '**', redirectTo: '/participate'}
 ];
 
@@ -44,7 +47,8 @@ const appRoutes: Routes = [
   MaxCharsDirective,
   ExampleActivityComponent,
   AdminDebugPanelComponent,
-  ViewExampleComponent
+  ViewExampleComponent,
+  ManagePageComponent
   ],
   imports: [
   BrowserModule,

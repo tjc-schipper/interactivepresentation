@@ -29,3 +29,6 @@ activity-input: {content}
 
 lobby-join-failed
 lobby-join-success
+lobby-closed
+activity-update (incremental)
+activity-sync (full)

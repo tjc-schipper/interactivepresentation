@@ -1,6 +1,7 @@
 //TODO: Create Activity classes!
 
-var Activity = require('./activity.js');
+var Activity = require('./activities/baseactivity.js');
+var FourVoteActivity = require('./activities/fourvoteactivity.js');
 
 const ACTIVITIES = [
 // WaitScreen,
@@ -20,12 +21,18 @@ Lobby.prototype.user_ids = [];
 Lobby.prototype.activity;
 Lobby.prototype.activityIdx;
 
+Lobby.prototype.syncInterval;
+const INTERVAL_LENGTH = 3000;
+
 function Lobby(lobby_code) {
 	this.code = lobby_code;
-	this.timeCreate = new Date().getTime() / 1000;
-	this.activityIdx = 0;
 
-	this.activity = new Activity();
+	this.activityIdx = 0;
+	this.activity = new FourVoteActivity();
+	
+	this.syncInterval = setInterval((function() {
+		this.sendActivitySync();
+	}).bind(this), INTERVAL_LENGTH);
 }
 
 Lobby.prototype.addUser = function(user_id) {
@@ -67,15 +74,25 @@ Lobby.prototype.receiveInput = function(user_id, data) {
 	if (this.activity == null)
 		return;
 
-	this.activity.addInput(user_id, data);
-	this.emitToAll('activity-update', {content: this.activity.getAllInput()});
+	this.emitToAll('activity-update', {content: this.activity.addInput(user_id, data)});
 }
 
 Lobby.prototype.close = function() {
-	this.emitToAll('disconnect', {
+	this.emitToAll('lobby-closed', {
 		lobbyCode: this.code,
 		reason: 'Lobby closed!'
 	});
+	clearInterval(this.syncInterval);
+}
+
+Lobby.prototype.sendActivitySync = function() {
+	if (this.activity != null) {
+		console.log('SYNC: ');
+		console.log(this.activity.getAggregatedInput());
+		console.log('--------------------------');
+		//this.emitToAll('activity-update', this.activity.getAggregatedInput());
+		//this.emitToAll('activity-update', this.activity.getAllInput());
+	}
 }
 
 module.exports = Lobby;

@@ -1,11 +1,15 @@
+"use strict";
+
 var Lobby = require('./lobby2.js');
 var users = require('./users.js').userList;
 
-var LobbyManager = module.exports = {
-	MAX_USERS_PER_LOBBY: 2,
-	lobbies: {},
+class LobbyManager {
+	
+	constructor() {
+		this.lobbies = {};
+	}
 
-	addUserToLobby: function(user_id, lobby_code) {
+	addUserToLobby (user_id, lobby_code) {
 		const lobby = this.lobbies[lobby_code];
 		if (lobby != null) {
 			if (!lobby.hasUser(user_id)) {
@@ -17,16 +21,16 @@ var LobbyManager = module.exports = {
 		}
 		else
 			return false;
-	},
+	};
 
-	removeUserFromLobby: function(user_id) {
+	removeUserFromLobby(user_id) {
 		var lobby = this.getLobby(users[user_id].lobbyCode);
 		if (lobby != null) {
 			lobby.removeUser(user_id);
 		}
-	},
+	};
 
-	createLobby: function(lobby_code) {
+	createLobby(lobby_code) {
 		if (this.lobbies[lobby_code] != null) {
 			console.log('WARNING: Code already in use');
 			return;
@@ -36,13 +40,13 @@ var LobbyManager = module.exports = {
 		this.lobbies[lobby_code] = lobby;
 		console.log('LOG: Created lobby: ' + lobby_code);
 		return lobby;
-	},
+	};
 
-	getLobby: function(lobby_code) {
+	getLobby(lobby_code) {
 		return this.lobbies[lobby_code];
-	},
+	};
 
-	closeLobby: function(lobby_code) {
+	closeLobby(lobby_code) {
 		var lobby = this.lobbies[lobby_code];
 		if (lobby != null) {
 			lobby.close();
@@ -51,15 +55,15 @@ var LobbyManager = module.exports = {
 		}
 		else
 			console.log('WARNING: Cannot close lobby ' + lobby_code + ', does not exist');
-	},
+	};
 
-	advanceLobbyActivity: function(lobby_code) {
+	advanceLobbyActivity(lobby_code) {
 		var lobby = this.lobbies[lobby_code];
 		if (lobby != null)
 			lobby.nextActivity();
-	},
+	};
 
-	getLobbyForUser: function(user_id) {
+	getLobbyForUser(user_id) {
 		var lobby;
 		for (var i = 0; i < this.lobbies.length; i++) {
 			if (this.lobbies[i].hasUser(user_id)) {
@@ -68,5 +72,7 @@ var LobbyManager = module.exports = {
 			}
 		}
 		return lobby;
-	}
+	};
 }
+
+module.exports = LobbyManager;

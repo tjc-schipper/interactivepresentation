@@ -7,7 +7,9 @@ var express = require('express');
 var http = require('http').Server();
 var io = require('socket.io')(http);
 var users = require('./users.js').userList;	// central user list for all lobbies!
-var lobbyManager = require('./lobbymanager.js');
+var LobbyManager = require('./lobbymanager.js');
+
+var lobbyManager = new LobbyManager();
 
 io.on('connection', function(user) {
 	
@@ -15,12 +17,13 @@ io.on('connection', function(user) {
 	console.log('User connected with id: ' + user.id);
 
 	// data = {lobbyCode: 'abcd'}
-	user.on('lobby-join', function(data, clientResponse) {
+	// callback = callback passed by client so we can send a success/fail response
+	user.on('lobby-join', function(data, clientResponseCallback) {
 		var success = lobbyManager.addUserToLobby(user.id, data.lobbyCode);
 		if (success)
 			users[user.id].lobbyCode = data.lobbyCode;
 
-		clientResponse({
+		clientResponseCallback({
 			lobbyCode: data.lobbyCode,
 			success: success
 		});
@@ -37,11 +40,13 @@ io.on('connection', function(user) {
 	});
 
 	user.on('lobby-leave', function() {
-		console.log('LOG: User ' + user.id + ' disconnected from lobby ' + users[user.id].lobbyCode);
+		var code = users[user.id].lobbyCode;
+		console.log('LOG: User ' + user.id + ' disconnected from lobby ' + (code != null) ? code : '');
 		lobbyManager.removeUserFromLobby(user.id);
 	});
 
 	user.on('disconnect', function() {
+		console.log('DISCONNECT');
 		lobbyManager.removeUserFromLobby(user.id);
 		
 		console.log('LOG: User ' + user.id + ' disconnected.');
@@ -54,6 +59,7 @@ io.on('connection', function(user) {
 	});
 
 	user.on('admin-lobby-close', function(data) {
+		console.log('RECEIVE [ADMIN-LOBBY-CLOSE]');
 		lobbyManager.closeLobby(data.lobbyCode);
 	});
 
