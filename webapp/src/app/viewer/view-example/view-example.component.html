@@ -1,3 +1,5 @@
-<p>
-  view-example works!
-</p>
+<div class="row">
+	<div class="col-xs 12">
+		<p *ngFor="let entry of data"><strong>{{entry.user_id}}</strong>: {{entry.content}}</p>
+	</div>
+</div>

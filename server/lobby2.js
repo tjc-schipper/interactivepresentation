@@ -30,9 +30,9 @@ function Lobby(lobby_code) {
 	this.activityIdx = 0;
 	this.activity = new FourVoteActivity();
 	
-	this.syncInterval = setInterval((function() {
-		this.sendActivitySync();
-	}).bind(this), INTERVAL_LENGTH);
+	// this.syncInterval = setInterval((function() {
+	// 	this.sendActivitySync();
+	// }).bind(this), INTERVAL_LENGTH);
 }
 
 Lobby.prototype.addUser = function(user_id) {

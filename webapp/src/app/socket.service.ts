@@ -27,7 +27,7 @@ export class SocketService {
 		this.socket.emit(message, data);
 	}
 
-	public on(message: string, data:any, callback) {
+	public on(message: string, callback) {
 		this.socket.on(message, callback);
 	}
 

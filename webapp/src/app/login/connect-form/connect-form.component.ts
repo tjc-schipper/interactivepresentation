@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LobbyService } from '../../lobby/lobby.service';
 
 @Component({
@@ -11,13 +11,17 @@ export class ConnectFormComponent implements OnInit {
   lobbyCode:string = "";
   currentError:string = "";
 
+  @Output() onSubmit: EventEmitter<string> = new EventEmitter();
+
   constructor(private lobbyService:LobbyService) { }
 
   ngOnInit() {
   }
 
   onClickConnect = function() {
-    this.lobbyService.attemptJoin(this.lobbyCode);
+    if (this.onSubmit != null)
+      this.onSubmit.emit(this.lobbyCode);
+    //this.lobbyService.attemptJoin(this.lobbyCode);
   }
 
   isValidRoomName = function() {

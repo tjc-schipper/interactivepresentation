@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocketService } from '../../socket.service';
+import { LobbyService } from '../lobby.service';
 
 @Component({
   selector: 'app-lobbyheader',
@@ -11,15 +12,13 @@ export class LobbyHeaderComponent implements OnInit {
 	
 	@Input('lobbycode') lobbyCode:string = "aaaa";
 
-  constructor(private router: Router, private socketService: SocketService) { }
+  constructor(private router: Router, private socketService: SocketService, private lobbyService: LobbyService) { }
 
   ngOnInit() {
   }
 
   onClickBack() {
-  	//TODO: Disconnect! Handle?
-    this.socketService.send('lobby-leave', {});
-  	this.router.navigate(['participate']);
+  	this.lobbyService.leaveLobby();
   }
 
 }
