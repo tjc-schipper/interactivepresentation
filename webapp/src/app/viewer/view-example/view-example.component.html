@@ -1,5 +1,8 @@
 <div class="row">
 	<div class="col-xs 12">
-		<p *ngFor="let entry of data"><strong>{{entry.user_id}}</strong>: {{entry.content}}</p>
+		<!--<p *ngFor="let entry of data"><strong>{{entry.user_id}}</strong>: {{entry.content}}</p>-->
+		<div [hidden]="!chart">
+			<canvas id="canvas">{{chart}}</canvas>
+		</div>
 	</div>
 </div>
