@@ -15,6 +15,9 @@ export class ViewExampleComponent implements OnInit {
 
   data: DataContainer[] = [];
 
+  groupedData: Map<string, number> = new Map();
+
+  // chart setup
   width = 600;
   height = 500;
   radius = 100;
@@ -28,10 +31,23 @@ export class ViewExampleComponent implements OnInit {
 
   handleUpdate(newEntry:any) {
     this.data.push(newEntry.content);
+    this.processData([newEntry]);
+    this.updateChart();
+
     console.log('handling update');
-    this.chart.data = this.getNumEntries(this.data);
+    this.chart.config.data.datasets[0] = this.getNumEntries(this.data);
     console.log('updating graph');
     this.chart.update();
+  }
+
+  handleSync(sync:any) {
+    this.data = sync;
+    this.processData(this.data);
+    this.updateChart();
+  }
+
+  updateChart() {
+
   }
 
   initGraph() {
@@ -49,6 +65,21 @@ export class ViewExampleComponent implements OnInit {
     var l = data.length;
     console.log('getting num entries: ' + l);
     return [l];
+  }
+
+  // Process entries in this.data and group them by value (content), assigning to this.groupedData
+  // Takes array of DataContainers, so can be used for merging in activity-updates as well as initing using activity-sync!
+  // (As long as you clear this.groupedData before processing a sync!)
+  processData(data: DataContainer[]) {
+    var grouped: Map<string, number> = this.groupedData;
+    data.forEach(function(entry) {
+      var currentCount = grouped.get(entry.content);
+      if (currentCount == null)
+        currentCount = 0;
+
+      grouped.set(entry.content, currentCount + 1);
+    });
+    
   }
 
 }
